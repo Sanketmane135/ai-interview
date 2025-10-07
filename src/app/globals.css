@@ -20,3 +20,65 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+  width: 8px;   /* vertical scrollbar */
+  height: 8px;  /* horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937; /* Tailwind gray-800 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4b5563; /* Tailwind gray-600 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280; /* Tailwind gray-500 */
+}
+
+@keyframes wave1 {
+  0%, 100% { height: 6px; }
+  50% { height: 16px; }
+}
+@keyframes wave2 {
+  0%, 100% { height: 8px; }
+  50% { height: 18px; }
+}
+@keyframes wave3 {
+  0%, 100% { height: 7px; }
+  50% { height: 17px; }
+}
+@keyframes wave4 {
+  0%, 100% { height: 9px; }
+  50% { height: 19px; }
+}
+@keyframes wave5 {
+  0%, 100% { height: 7px; }
+  50% { height: 15px; }
+}
+
+
+.animate-wave1 { animation: wave1 1s infinite ease-in-out; }
+.animate-wave2 { animation: wave2 1.2s infinite ease-in-out; }
+.animate-wave3 { animation: wave3 0.9s infinite ease-in-out; }
+.animate-wave4 { animation: wave4 1.1s infinite ease-in-out; }
+.animate-wave5 { animation: wave5 1.3s infinite ease-in-out; }

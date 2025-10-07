@@ -1,6 +1,21 @@
+'use client'
 import React from 'react'
+import { signIn, signOut, useSession } from "next-auth/react";
 
 function Hero() {
+
+   const { data: session, status } = useSession();
+  const handlestart=(e)=>{
+    e.preventDefault();
+    if(!session){
+      signIn();
+    }
+    else{
+      window.location.href="/interview"
+    }
+  }
+
+
   return (
     <div className="bg-gradient-to-b from-black via-gray-900 to-black text-white h-screen flex items-center justify-center">
 
@@ -22,9 +37,9 @@ function Hero() {
 
     
     <div className="w-full flex flex-col sm:flex-row justify-center gap-4">
-      <a href='/interview' className="sm:w-10 md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+      <button onClick={handlestart} className="sm:w-10 md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
         Get Started
-      </a>
+      </button>
       <button className="border border-gray-500 hover:border-blue-500 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
         Watch Demo
       </button>
