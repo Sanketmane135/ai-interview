@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation';
 import "./../globals.css";
 
-const UserProfileForm = () => { 
+const Page = () => { 
   const router = useRouter();
   const [uploadedFile, setUploadedFile] = useState(null);
   const [status, setStatus] = useState(null);
@@ -195,4 +195,4 @@ const UserProfileForm = () => {
   );
 };
 
-export default UserProfileForm;
+export default Page;

@@ -9,7 +9,7 @@ import axios from 'axios';
 import './../../globals.css';
 import Footer from '@/components/footer';
 
-function page() {
+function Page() {
   const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition(); // ✅ added resetTranscript
   const router = useRouter();
 
@@ -355,4 +355,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
