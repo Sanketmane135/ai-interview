@@ -98,6 +98,7 @@ function Page() {
 
   const submitStart = async () => {
     setIsActive(true);
+    console.log("Called the function");
     if (userData) {
       setIsActive(true);
       try {
