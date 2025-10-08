@@ -16,7 +16,9 @@ const handler = NextAuth({
         },
       },
     }),
+
   ],
+  
   secret: process.env.NEXTAUTH_SECRET,
   // You can add callbacks, session settings, etc, here if needed.
 });

@@ -106,7 +106,7 @@ const UserProfileForm = () => {
                     </div>
                   </div>
 
-                  <button onClick={removeFile} className="text-red-600 hover:text-red-500 font-semibold">Remove</button>
+                  <button onClick={removeFile} className="text-red-600 hover:text-red-500 font-semibold border rounded">Remove</button>
                 </div>
                 {status === "uploading" && <p className="text-blue-400">Processing resume...</p>}
                 {status === "success" && <p className="text-green-400 font-medium">✅ Resume processed successfully!</p>}

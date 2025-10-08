@@ -36,7 +36,7 @@ function page() {
   const [messages, setMessages] = useState([
     {
       role: "ai",
-      text: `Hello ${constUsername}! Your interview for the role of ${jobrole} has been scheduled. You will be asked ${questions} questions. Click on Start button above.. Good luck!`
+      text: `Hello ${constUsername}! Your interview for the role of ${jobrole} has been scheduled... Good luck!`
     },
   ]);
   

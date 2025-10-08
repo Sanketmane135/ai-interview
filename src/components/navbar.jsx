@@ -15,7 +15,7 @@ function Navbar() {
           <span className="font-medium text-lg text-white">ResumeIQ</span>
         </div>
 
-        <div className='md:flex gap-5 text-sm md:text-lg hidden'>
+        {/* <div className='md:flex gap-5 text-sm md:text-lg hidden'>
           <a className='text-gray-200 cursor-pointer hover:text-gray-50 hover:border-b-1 hover:transition'>
             Features
           </a>
@@ -27,7 +27,7 @@ function Navbar() {
           <a className='text-gray-200 cursor-pointer hover:text-gray-50 hover:border-b-1'>
             Reviews
           </a>
-        </div>
+        </div> */}
 
 
         {/* Links */}
