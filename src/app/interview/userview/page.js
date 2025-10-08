@@ -1,19 +1,18 @@
-'use client'
-import React, { useEffect, useRef, useState, useContext } from 'react';
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-
-
-
 import axios from 'axios';
 import './../../globals.css';
 import Footer from '@/components/footer';
 
 function Page() {
-  const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition(); // ✅ added resetTranscript
   const router = useRouter();
-
   const searchparams = useSearchParams();
+
+  // ✅ Always define hooks at the top
+  const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition();
+
   const constUsername = searchparams.get("fullname");
   const jobrole = searchparams.get("jobrole");
   const experience = searchparams.get("experience");
@@ -23,12 +22,7 @@ function Page() {
   const userId = searchparams.get("userid");
 
   const [isActive, setIsActive] = useState(false);
- const [userData, setUserData] = useState("");
-  useEffect(() => {
-    const data = localStorage.getItem("interviewMessage");
-    if (data) setUserData(data);
-  }, []);
-
+  const [userData, setUserData] = useState("");
   const [allQuestions, setallQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [qaList, setQaList] = useState([]);
@@ -39,73 +33,86 @@ function Page() {
       text: `Hello ${constUsername}! Your interview for the role of ${jobrole} has been scheduled... Good luck!`
     },
   ]);
-  
-  const chatEndRef = useRef(null)
+  const [showModal, setShowModal] = useState(true);
+  const [submitData, setSubmitData] = useState([]);
+  const [onSubmitData, setOnSubmitData] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
-  const missing = !constUsername || !jobrole || !experience || !questionlevel || !questions || !locationpreference || !userId;    
+  const chatEndRef = useRef(null);
+  const missing = !constUsername || !jobrole || !experience || !questionlevel || !questions || !locationpreference || !userId;
 
+  // ✅ Hooks must all be defined before any conditional returns
+  useEffect(() => {
+    const data = localStorage.getItem("interviewMessage");
+    if (data) setUserData(data);
+  }, []);
 
+  useEffect(() => {
+    if (allQuestions.length > 0 && currentQuestionIndex < allQuestions.length) {
+      setMessages(prev => [...prev, { role: "ai", text: allQuestions[currentQuestionIndex]?.question }]);
+    }
+  }, [currentQuestionIndex, allQuestions]);
 
+  // ✅ Log for debugging (safe)
+  useEffect(() => {
+    console.log(allQuestions);
+  }, [allQuestions]);
 
-  // Start/stop listening
+  useEffect(() => {
+    console.log(submitData);
+  }, [submitData]);
+
+  // ✅ Safe return check (AFTER hooks)
+  if (!browserSupportsSpeechRecognition) {
+    return (
+      <div className="text-center p-10 text-red-500">
+        Your browser does not support speech recognition.
+      </div>
+    );
+  }
+
+  // ---------- Functions ----------
   const startListening = () => {
     setListeningMode(true);
-    resetTranscript(); // ✅ clear transcript when starting new answer
+    resetTranscript();
     SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
   };
 
   const stopListening = () => {
     SpeechRecognition.stopListening();
     setListeningMode(false);
-    
 
     if (transcript.trim() && allQuestions[currentQuestionIndex]) {
-      const qna = { 
-        question: allQuestions[currentQuestionIndex]?.question, 
-        answer: transcript 
+      const qna = {
+        question: allQuestions[currentQuestionIndex]?.question,
+        answer: transcript,
       };
 
       setQaList(prev => [...prev, qna]);
       setMessages(prev => [...prev, { role: "user", text: transcript }]);
       setCurrentQuestionIndex(prev => prev + 1);
 
-      resetTranscript(); // ✅ clear transcript after saving answer
+      resetTranscript();
     }
   };
 
-  // Show next AI question
-  useEffect(() => {
-    if (allQuestions.length > 0 && currentQuestionIndex < allQuestions.length) {
-      setMessages(prev => [...prev, { role: "ai", text: allQuestions[currentQuestionIndex]?.question }]);
-    }
-    console.log(allQuestions.length);
-    
-  }, [currentQuestionIndex, allQuestions]);
-
-  // Load userData
-  // useEffect(() => {
-  //   const pdfData = localStorage.getItem("interviewdata");
-  //   setUserData(pdfData);
-  // }, []);
-
   const submitStart = async () => {
     if (userData) {
-      setIsActive(true)
+      setIsActive(true);
       try {
         const response = await axios.post(`http://localhost:3001/interviwer`, {
-          userId: userId,
+          userId,
           fullname: constUsername,
-          jobrole: jobrole,
-          experience: experience,
-          questionlevel: questionlevel,
-          questions: questions,
-          locationpreference:locationpreference,
-          resumeText: userData
+          jobrole,
+          experience,
+          questionlevel,
+          questions,
+          locationpreference,
+          resumeText: userData,
         });
         setallQuestions(response.data.questions.questions);
         setIsActive(false);
         setIsModalOpen(false);
-     
       } catch (error) {
         console.error("Error:", error);
         setIsActive(false);
@@ -113,46 +120,25 @@ function Page() {
     }
   };
 
-  useEffect(()=>{
-    console.log(allQuestions);
-  },[])
+  const aftersubmit = async () => {
+    console.log("Final Q&A:", qaList);
+    setOnSubmitData(false);
 
-  if (!browserSupportsSpeechRecognition) return null;
+    try {
+      const submitResponse = await axios.post(`http://localhost:3001/givefeedback`, { qaList });
+      localStorage.setItem("feedback", JSON.stringify(submitResponse.data.data));
+      router.push("/interview/userview/feedback");
+    } catch (error) {
+      console.log("submit error", error);
+      setOnSubmitData(true);
+    }
+  };
 
-  const [showmodal, setShowModal]=useState(true);
-  const [submitData,setSubmitdata]=useState([]);
-  const [onSubmitData, setOnSubmitData]=useState(true)
-
-  const aftersubmit =async(e)=>{
-     console.log("Final Q&A:", qaList);
-     setOnSubmitData(false)
-
-     try {
-        const submitresponce = await axios.post(`http://localhost:3001/givefeedback`, {qaList} );
-        console.log(submitresponce.data.data);
-        localStorage.setItem("feedback", JSON.stringify(submitresponce.data.data));
-        
-        router.push("/interview/userview/feedback");
-        
-        
-
-     } catch (error) {
-      console.log("submit error",error);
-      setOnSubmitData(true)
-      
-     }
-  }
-  useEffect(()=>{
-    console.log(submitData);
-    
-  },[])
-
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  // ---------- Render ----------
   return (
-    <div className='w-full bg-black   relative '>
-      
+    <div className="w-full bg-black relative">
       {missing ? (
-        <div className=" w-full h-screen content-center  text-center space-y-4">
+        <div className="w-full h-screen content-center text-center space-y-4">
           <p className="text-red-500 text-lg font-semibold">
             Some required values are missing!
           </p>
