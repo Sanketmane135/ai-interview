@@ -97,6 +97,7 @@ function Page() {
   };
 
   const submitStart = async () => {
+    setIsActive(true);
     if (userData) {
       setIsActive(true);
       try {
