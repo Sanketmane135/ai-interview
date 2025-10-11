@@ -97,6 +97,8 @@ function Page() {
   };
 
   const submitStart = async () => {
+    console.log("submit start function called here");
+    
     if (userData) {
       setIsActive(true);
       try {
