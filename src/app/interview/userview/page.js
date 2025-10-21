@@ -97,10 +97,12 @@ function Page() {
   };
 
   const submitStart = async () => {
+    console.log('interview submitted');
+    
     if (userData) {
       setIsActive(true);
       try {
-        const response = await axios.post(`http://localhost:3001/interviwer`, {
+        const response = await axios.post(`https://interview-8dwu.vercel.app/interviwer`, {
           userId,
           fullname: constUsername,
           jobrole,
@@ -125,7 +127,7 @@ function Page() {
     setOnSubmitData(false);
 
     try {
-      const submitResponse = await axios.post(`http://localhost:3001/givefeedback`, { qaList });
+      const submitResponse = await axios.post(`https://interview-8dwu.vercel.app/givefeedback`, { qaList });
       localStorage.setItem("feedback", JSON.stringify(submitResponse.data.data));
       router.push("/interview/userview/feedback");
     } catch (error) {

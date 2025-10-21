@@ -22,7 +22,7 @@ const Page = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await fetch("http://localhost:3001/parse-pdf", { method: "POST", body: formData });
+      const res = await fetch("https://interview-8dwu.vercel.app/parse-pdf", { method: "POST", body: formData });
       if (!res.ok) { setStatus("error"); return; }
       const data = await res.json();
       localStorage.setItem("interviewdata", data.text);
