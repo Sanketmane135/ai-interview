@@ -96,31 +96,121 @@ function Page() {
     }
   };
 
-  const submitStart = async () => {
-    console.log('interview submitted');
+  // const submitStart = async () => {
+  //   console.log('interview submitted');
     
-    if (userData) {
-      setIsActive(true);
-      try {
-        const response = await axios.post(`https://interview-8dwu.vercel.app/interviwer`, {
-          userId,
-          fullname: constUsername,
-          jobrole,
-          experience,
-          questionlevel,
-          questions,
-          locationpreference,
-          resumeText: userData,
-        });
-        setallQuestions(response.data.questions.questions);
-        setIsActive(false);
-        setIsModalOpen(false);
-      } catch (error) {
-        console.error("Error:", error);
-        setIsActive(false);
+  //   if (userData) {
+  //     setIsActive(true);
+  //     try {
+  //       const response = await axios.post(`https://interview-8dwu.vercel.app/interviwer`, {
+  //         userId,
+  //         fullname: constUsername,
+  //         jobrole,
+  //         experience,
+  //         questionlevel,
+  //         questions,
+  //         locationpreference,
+  //         resumeText: userData,
+  //       });
+  //       setallQuestions(response.data.questions.questions);
+  //       setIsActive(false);
+  //       setIsModalOpen(false);
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //       setIsActive(false);
+  //     }
+  //   }
+  // };
+
+
+  const initSpeechRecognition = () => {
+  console.log("🎤 Initializing Speech Recognition...");
+
+  // ✅ Browser compatibility check
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert("Your browser does not support Speech Recognition. Please use Chrome or Edge.");
+    console.error("SpeechRecognition not supported in this browser.");
+    return;
+  }
+
+  try {
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => console.log("🎙️ Speech recognition started!");
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      console.log("🗣️ Speech result:", transcript);
+    };
+    recognition.onerror = (event) => {
+      console.error("⚠️ Speech recognition error:", event.error);
+      if (event.error === "not-allowed") {
+        alert("Please allow microphone access to start the interview.");
+      } else if (event.error === "no-speech") {
+        alert("No speech detected. Try speaking again.");
       }
+    };
+    recognition.onend = () => console.log("Speech recognition ended.");
+
+    // ✅ Attempt to start — must be triggered by user gesture
+    recognition.start();
+    console.log("Recognition started (called successfully)");
+
+  } catch (error) {
+    console.error("❌ Error initializing recognition:", error);
+  }
+};
+
+
+  const submitStart = async () => {
+  console.log("interview submitted");
+
+  if (!userData) {
+    alert("Missing user data. Please re-upload your resume or refresh the page.");
+    return;
+  }
+
+  setIsActive(true);
+
+  try {
+    // ✅ Fetch questions from backend
+    const response = await axios.post(`https://interview-8dwu.vercel.app/interviwer`, {
+      userId,
+      fullname: constUsername,
+      jobrole,
+      experience,
+      questionlevel,
+      questions,
+      locationpreference,
+      resumeText: userData,
+    });
+
+    console.log("✅ Backend response:", response.data);
+
+    // ✅ Check the correct data path before setting
+    const questionsData = response.data?.questions?.questions || response.data?.questions || [];
+    setallQuestions(questionsData);
+
+    if (!questionsData.length) {
+      alert("No questions received from backend. Please check your API response format.");
+      console.error("Questions data missing:", response.data);
     }
-  };
+
+    setIsModalOpen(false);
+    setIsActive(false);
+
+    // ✅ Try initializing SpeechRecognition safely (optional immediate test)
+    initSpeechRecognition();
+
+  } catch (error) {
+    console.error("❌ Error fetching interview questions:", error);
+    setIsActive(false);
+    alert("Something went wrong while fetching questions. Please try again.");
+  }
+};
 
   const aftersubmit = async () => {
     console.log("Final Q&A:", qaList);
