@@ -10,6 +10,8 @@ const Page = () => {
   const [status, setStatus] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
 
+    const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
   const handleFile = async (file) => {
     if (!file) return;
     if (file.type !== "application/pdf") {
@@ -22,10 +24,10 @@ const Page = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await fetch("https://interview-8dwu.vercel.app/parse-pdf", { method: "POST", body: formData });
+      const res = await fetch(`${baseURL}/parse-pdf`, { method: "POST", body: formData });
       if (!res.ok) { setStatus("error"); return; }
       const data = await res.json();
-      localStorage.setItem("interviewdata", data.text);
+      sessionStorage.setItem("interviewdata", data.text);
       setStatus("success");
     } catch (err) {
       console.error(err);
