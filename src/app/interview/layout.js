@@ -1,37 +1,18 @@
 "use client";
 import "./../globals.css";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Suspense, createContext, useState, useEffect } from "react";
+import { Suspense} from "react";
 import { SessionProvider } from "next-auth/react";
 
-// Create Context
-export const InterviewContext = createContext();
 
 const metadata = {
   title: "Resume IQ - Your AI Interview partner",
-  description: "",
+  description: "Upload your resume and practice tailored interview questions powered by AI. Get instant feedback and boost your confidence.",
 };
 
 export default function InterviewLayout({ children }) {
-  const [message, setMessage] = useState("");
 
-  // Load from localStorage on first render
-  
-  useEffect(() => {
-    const savedMsg = localStorage.getItem("interviewMessage");
-    if (savedMsg) {
-      setMessage(savedMsg);
-    }
-  }, []);
-
-  // Save to localStorage whenever message changes
-  useEffect(() => {
-    if (message) {
-      localStorage.setItem("interviewMessage", message);
-    }
-  }, [message]);
 
   return (
     <html lang="en">
