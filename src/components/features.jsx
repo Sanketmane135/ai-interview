@@ -1,3 +1,4 @@
+import { LayoutDashboard } from 'lucide-react';
 import React from 'react';
 
 const HeroAndFeatures = () => {
@@ -54,11 +55,11 @@ const HeroAndFeatures = () => {
           {/* feature 4 */}
           <div className="rounded-lg bg-gray-950 p-6 shadow-lg border border-gray-900">
             <div className="flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#007bff"><path d="M480-313 287-506l43-43 120 120v-371h60v371l120-120 43 43-193 193ZM220-160q-24 0-42-18t-18-42v-143h60v143h520v-143h60v143q0 24-18 42t-42 18H220Z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#007bff"><path d="M510-570v-270h330v270H510ZM120-450v-390h330v390H120Zm390 330v-390h330v390H510Zm-390 0v-270h330v270H120Zm60-390h210v-270H180v270Zm390 330h210v-270H570v270Zm0-450h210v-150H570v150ZM180-180h210v-150H180v150Zm210-330Zm180-120Zm0 180ZM390-330Z"/></svg>
             </div>
-            <h3 className="mt-4 text-center text-xl font-bold">Downloadable Report</h3>
+            <h3 className="mt-4 text-center text-xl font-bold">User Dashboard</h3>
             <p className="mt-2 text-center text-gray-600 dark:text-gray-300">
-             Receive a comprehensive PDF report with your performance metrics and improvement suggestions.
+             Manage your dashboardwith all previous feedback history
             </p>
           </div>
 

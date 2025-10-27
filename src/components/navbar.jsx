@@ -2,6 +2,7 @@
 import React from 'react'
 import GoogleAuthButton from './GoogleAuthButton'
 import Providers from '@/app/providers'
+import Image from 'next/image'
 function Navbar() {
 
   return (
@@ -9,9 +10,9 @@ function Navbar() {
       <nav className="w-full fixed  h-20 top-0 left-0 z-50 bg-black/30 backdrop-blur-md border border-white/10 flex items-center justify-between px-6 md:pl-40 md:pr-40 md:py-6 py-4">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center">
-            <span className="text-xs font-bold">R</span>
-          </div>
+        
+            <Image src={'/logo.png'} width={30} height={40} alt='logo img' className='rounded-full'/>
+        
           <span className="font-medium text-lg text-white">ResumeIQ</span>
         </div>
 
@@ -31,8 +32,11 @@ function Navbar() {
 
 
         {/* Links */}
+
+     
         <div className="flex items-center gap-8 text-lg">
        <Providers>
+         
           <GoogleAuthButton />
         </Providers>   
           

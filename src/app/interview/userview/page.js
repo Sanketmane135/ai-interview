@@ -37,7 +37,7 @@ function Page() {
   const [submitData, setSubmitData] = useState([]);
   const [onSubmitData, setOnSubmitData] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(true);
-
+  const [updateId, setUpdateId]=useState(null);
   const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const chatEndRef = useRef(null);
 
@@ -47,6 +47,11 @@ function Page() {
   useEffect(() => {
     const timer = setTimeout(() => {
       const data = sessionStorage.getItem("interviewdata");
+      const dataid=sessionStorage.getItem("dataid");
+
+      if (dataid) setUserData(dataid);
+      setUpdateId(dataid);
+
       if (data) setUserData(data);
       setIsLoadingData(false); // Stop loading after fetching
     }, 1000); // simulate loading
@@ -55,7 +60,7 @@ function Page() {
 
   useEffect(()=>{
     console.log(userData);
-    
+    console.log(updateId);
   },[]);
 
   useEffect(() => {
@@ -131,6 +136,9 @@ function Page() {
     
 
     const storedData = userData || sessionStorage.getItem("interviewMessage");
+ 
+
+    console.log("dataid is", updateId);
     if (!storedData) {
       alert("Missing user data. Please re-upload your resume or refresh the page.");
       return;
@@ -161,14 +169,41 @@ function Page() {
     }
   };
 
+
+  // useEffect(()=>{
+  //   console.log(updateId);
+  // },[sessionStorage]
+  // );
   const aftersubmit = async () => {
     console.log("Final Q&A:", qaList);
     setOnSubmitData(false);
 
     try {
       const submitResponse = await axios.post(`${baseURL}/givefeedback`, { qaList });
-      localStorage.setItem("feedback", JSON.stringify(submitResponse.data.data));
+      sessionStorage.setItem("feedback", JSON.stringify(submitResponse.data.data));
+
+      const updatedata=await axios.put(`${baseURL}/upadatedata/${updateId}`,{
+          isInterviewDone: true,
+          feedbackData: {
+            strengths:submitResponse.data.data.strengths, 
+            growthOpportunities:submitResponse.data.data.growth_opportunities,
+            skills: {
+              communication:submitResponse.data.data.skills.communication,
+              strategy: submitResponse.data.data.skills.strategy,
+              teamwork:submitResponse.data.data.skills.teamwork,
+              adaptability:submitResponse.data.data.skills.adaptability,
+            },
+            comments: "Candidate performed well in the interview, just needs more hands-on experience."
+          },
+          answers_feedback:submitResponse.data.data.answers_feedback
+          
+        }
+        )
+
+        console.log('update data resposnce',updatedata);
       router.push("/interview/userview/feedback");
+
+
     } catch (error) {
       console.log("submit error", error);
       setOnSubmitData(true);
@@ -318,11 +353,11 @@ function Page() {
 
                     {!listeningMode ? (
                       <button onClick={startListening} className="bg-blue-600 px-2 py-2 text-white rounded-full">
-                        🎤
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#D9D9D9"><path d="M480-400q-50 0-85-35t-35-85v-240q0-50 35-85t85-35q50 0 85 35t35 85v240q0 50-35 85t-85 35Zm0-240Zm-40 520v-123q-104-14-172-93t-68-184h80q0 83 58.5 141.5T480-320q83 0 141.5-58.5T680-520h80q0 105-68 184t-172 93v123h-80Zm40-360q17 0 28.5-11.5T520-520v-240q0-17-11.5-28.5T480-800q-17 0-28.5 11.5T440-760v240q0 17 11.5 28.5T480-480Z"/></svg>
                       </button>
                     ) : (
                       <button onClick={stopListening} className="bg-red-600 px-2 py-2 text-white rounded-full">
-                        ⏹
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#D9D9D9"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/></svg>
                       </button>
                     )}
                   </div>

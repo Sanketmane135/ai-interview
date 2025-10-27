@@ -1,12 +1,10 @@
 "use client";
-
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
 import "./../globals.css";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Suspense, createContext, useState, useEffect } from "react";
+import { SessionProvider } from "next-auth/react";
 
 // Create Context
 export const InterviewContext = createContext();
@@ -14,13 +12,13 @@ export const InterviewContext = createContext();
 const metadata = {
   title: "Resume IQ - Your AI Interview partner",
   description: "",
-
 };
 
 export default function InterviewLayout({ children }) {
   const [message, setMessage] = useState("");
 
   // Load from localStorage on first render
+  
   useEffect(() => {
     const savedMsg = localStorage.getItem("interviewMessage");
     if (savedMsg) {
@@ -40,7 +38,7 @@ export default function InterviewLayout({ children }) {
       <body>
         
         <section className="w-full bg-gray-600 ">
-            <Suspense fallback={<div className="min-h-[400px]"></div>}>{children}</Suspense>
+            <Suspense fallback={<div className="min-h-[400px]"></div>}><SessionProvider>{children}</SessionProvider></Suspense>
           <ToastContainer position="top-center" autoClose={3000} />
         </section>
         

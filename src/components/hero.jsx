@@ -40,9 +40,7 @@ function Hero() {
       <button onClick={handlestart} className="sm:w-10 md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
         Get Started
       </button>
-      <button className="border border-gray-500 hover:border-blue-500 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
-        Watch Demo
-      </button>
+     
     </div>
   </div>
 

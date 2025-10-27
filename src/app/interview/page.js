@@ -3,14 +3,22 @@ import React, { useState } from 'react';
 import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation';
 import "./../globals.css";
+import axios from 'axios';
+import {useSession } from "next-auth/react";
 
 const Page = () => { 
   const router = useRouter();
   const [uploadedFile, setUploadedFile] = useState(null);
   const [status, setStatus] = useState(null);
+  const[useremail,setUserMail] = useState('');
   const [isDragging, setIsDragging] = useState(false);
-
+  
+  const { data: session} = useSession();
     const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  // if(session){
+  //   setUserMail(session.user.email)
+  // }
 
   const handleFile = async (file) => {
     if (!file) return;
@@ -23,12 +31,24 @@ const Page = () => {
 
     try {
       const formData = new FormData();
+
       formData.append("file", file);
-      const res = await fetch(`${baseURL}/parse-pdf`, { method: "POST", body: formData });
-      if (!res.ok) { setStatus("error"); return; }
+
+      const res = await fetch(`${baseURL}/parse-pdf`, { 
+        method: "POST", body: formData
+       });
+
+      if (!res.ok) { 
+        setStatus("error");
+         return; 
+        }
       const data = await res.json();
       sessionStorage.setItem("interviewdata", data.text);
       setStatus("success");
+       if(session){
+        setUserMail(session.user.email)
+      }
+
     } catch (err) {
       console.error(err);
       setStatus("error");
@@ -53,12 +73,46 @@ const Page = () => {
   const [questions,setQuestions] = useState("");
   const [location,setLocation] = useState("");
 
-  const aftersubmit=(e)=>{
+  const aftersubmit=async(e)=>{
     e.preventDefault();
     if(!userName || !usermail || !userPhone || !jobrole || !experince || !qlevel || !questions || !location){
       toast.error("All Fields are required"); return;
     }
-    if(!uploadedFile){ toast.error("Please upload your resume"); return; }
+    if(!uploadedFile){ 
+      toast.error("Please upload your resume"); 
+      return;
+     }
+
+     try {
+      const addData = await axios.post(`${baseURL}/adduserdata`,
+        {
+      isInterviewDone: false,
+      userMail:useremail,
+      candidatename: userName,
+      email: usermail,
+      jobRole:jobrole,
+      experience: experince,
+      locationPreference:location,
+      resumefile:uploadedFile.name,
+      feedbackData: {
+        strengths: [],
+        growthOpportunities: [],
+        skills: {
+          
+        },
+        comments: "NA"
+      },
+      answers_feedback: [
+      ]
+    });
+    console.log('data responce', addData)
+
+    sessionStorage.setItem("dataid", addData.data.data._id);
+
+     } catch (error) {
+      console.log('error in adding data', error)
+     }
+
     router.push(`/interview/userview?fullname=${userName}&jobrole=${jobrole}&experience=${experince}&questionlevel=${qlevel}&questions=${questions}&locationpreference=${location}&userid=${usermail}`);
   }
 
