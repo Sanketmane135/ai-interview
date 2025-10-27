@@ -22,7 +22,7 @@ function Page() {
 
   const [isActive, setIsActive] = useState(false);
   const [userData, setUserData] = useState("");
-  const [isLoadingData, setIsLoadingData] = useState(true); // 🔹 Added loading state
+  const [isLoadingData, setIsLoadingData] = useState(true); 
   const [allQuestions, setallQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [qaList, setQaList] = useState([]);
@@ -43,7 +43,6 @@ function Page() {
 
   const missing = !constUsername || !jobrole || !experience || !questionlevel || !questions || !locationpreference || !userId;
 
-  // ✅ Fetch session data with loading
   useEffect(() => {
     const timer = setTimeout(() => {
       const data = sessionStorage.getItem("interviewdata");
@@ -53,8 +52,8 @@ function Page() {
       setUpdateId(dataid);
 
       if (data) setUserData(data);
-      setIsLoadingData(false); // Stop loading after fetching
-    }, 1000); // simulate loading
+      setIsLoadingData(false); 
+    }, 1000); 
     return () => clearTimeout(timer);
   }, []);
 
@@ -77,7 +76,7 @@ function Page() {
     );
   }
 
-  // 🔹 Show loader until session data is ready
+ 
   if (isLoadingData) {
     return (
       <div className="w-full h-screen flex flex-col justify-center items-center bg-black text-white">
@@ -87,7 +86,7 @@ function Page() {
     );
   }
 
-  // ---------- Functions ----------
+  
   const startListening = () => {
     setListeningMode(true);
     resetTranscript();
@@ -174,6 +173,7 @@ function Page() {
   //   console.log(updateId);
   // },[sessionStorage]
   // );
+
   const aftersubmit = async () => {
     console.log("Final Q&A:", qaList);
     setOnSubmitData(false);
@@ -210,7 +210,7 @@ function Page() {
     }
   };
 
-  // ---------- Render ----------
+
   return (
     <div className="w-full bg-black relative">
       {missing ? (
@@ -269,7 +269,7 @@ function Page() {
             </div>
           )}
 
-          {/* Rest of UI remains identical */}
+          {/* Rest */}
           <div className="w-full flex flex-row gap-2 justify-between items-center bg-gray-900 p-2 shadow">
             <div className="p-6">
               <h1 className="text-xl md:text-2xl font-bold text-white">AI Interview</h1>
@@ -295,7 +295,7 @@ function Page() {
             </div>
           </div>
 
-          {/* Chat + Input + Footer remain same */}
+          {/* Chat section */}
           <div className="bg-gray-800 flex items-center justify-center">
             <div className="w-full h-screen shadow-lg border border-gray-800 bg-gray-900 flex flex-col">
               <div className="w-full p-6 md:px-40 space-y-4 bg-gray-800 min-h-[400px] max-h-[400px] overflow-y-auto">

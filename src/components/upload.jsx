@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function ResumeUpload() {
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [status, setStatus] = useState(null); // uploading | success | error
+  const [status, setStatus] = useState(null); 
   const [isDragging, setIsDragging] = useState(false);
 
   const handleFile = (file) => {
@@ -17,7 +17,7 @@ export default function ResumeUpload() {
     setUploadedFile(file);
     setStatus("uploading");
 
-    // Simulate resume analysis (replace with API call)
+    
     setTimeout(() => {
       setStatus("success");
     }, 2000);

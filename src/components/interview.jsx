@@ -125,7 +125,7 @@ function Interview() {
 
         <div className="flex flex-col md:flex-row gap-6">
 
-          {/* Resume Upload */}
+          
           <div className="flex-1">
             {!uploadedFile ? (
               <div
@@ -171,28 +171,28 @@ function Interview() {
             )}
           </div>
 
-          {/* Form */}
+       
           <form onSubmit={aftersubmit} className="flex-1 border border-gray-700 rounded-xl p-6 bg-gray-800 space-y-6 shadow-lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {/** Full Name **/}
+              
               <div>
                 <label className="block text-sm font-medium text-gray-300">Full Name <span className="text-red-500">*</span></label>
                 <input value={userName} onChange={e=>setUserName(e.target.value)} placeholder="Enter your full name" className="mt-1 block w-full px-4 py-2 rounded-lg bg-gray-900 text-gray-200 border border-gray-600 focus:ring-blue-500 focus:border-blue-500"/>
               </div>
 
-              {/** Email **/}
+              
               <div>
                 <label className="block text-sm font-medium text-gray-300">Email <span className="text-red-500">*</span></label>
                 <input value={usermail} onChange={e=>setUsermail(e.target.value)} placeholder="your.email@example.com" className="mt-1 block w-full px-4 py-2 rounded-lg bg-gray-900 text-gray-200 border border-gray-600 focus:ring-blue-500 focus:border-blue-500"/>
               </div>
 
-              {/** Phone **/}
+             
               <div>
                 <label className="block text-sm font-medium text-gray-300">Phone <span className="text-red-500">*</span></label>
                 <input type="tel" value={userPhone} onChange={e=>setPhone(e.target.value)} placeholder="+91 935970XXXX" className="mt-1 block w-full px-4 py-2 rounded-lg bg-gray-900 text-gray-200 border border-gray-600 focus:ring-blue-500 focus:border-blue-500"/>
               </div>
 
-              {/** Job Role **/}
+             
               <div>
                 <label className="block text-sm font-medium text-gray-300">Preferred Job Role <span className="text-red-500">*</span></label>
                 <select value={jobrole} onChange={e=>setJobrole(e.target.value)} className="mt-1 block w-full px-4 py-2 rounded-lg bg-gray-900 text-gray-200 border border-gray-600 focus:ring-blue-500 focus:border-blue-500">
@@ -204,7 +204,7 @@ function Interview() {
                 </select>
               </div>
 
-              {/** Experience **/}
+            
               <div>
                 <label className="block text-sm font-medium text-gray-300">Experience Level <span className="text-red-500">*</span></label>
                 <select value={experince} onChange={e=>setExperince(e.target.value)} className="mt-1 block w-full px-4 py-2 rounded-lg bg-gray-900 text-gray-200 border border-gray-600 focus:ring-blue-500 focus:border-blue-500">
@@ -216,7 +216,7 @@ function Interview() {
                 </select>
               </div>
 
-              {/** Level of Questions **/}
+              
               <div>
                 <label className="block text-sm font-medium text-gray-300">Level of Questions <span className="text-red-500">*</span></label>
                 <select value={qlevel} onChange={e=>setqlevel(e.target.value)} className="mt-1 block w-full px-4 py-2 rounded-lg bg-gray-900 text-gray-200 border border-gray-600 focus:ring-blue-500 focus:border-blue-500">
@@ -227,7 +227,7 @@ function Interview() {
                 </select>
               </div>
 
-              {/** Avg Questions **/}
+            
               <div>
                 <label className="block text-sm font-medium text-gray-300">Avg Questions <span className="text-red-500">*</span></label>
                 <select value={questions} onChange={e=>setQuestions(e.target.value)} className="mt-1 block w-full px-4 py-2 rounded-lg bg-gray-900 text-gray-200 border border-gray-600 focus:ring-blue-500 focus:border-blue-500">
@@ -236,7 +236,7 @@ function Interview() {
                 </select>
               </div>
 
-              {/** Location Preference **/}
+              
               <div>
                 <label className="block text-sm font-medium text-gray-300">Location Preference <span className="text-red-500">*</span></label>
                 <input type="text" value={location} onChange={e=>setLocation(e.target.value)} placeholder="e.g., India, USA, Canada..." className="mt-1 block w-full px-4 py-2 rounded-lg bg-gray-900 text-gray-200 border border-gray-600 focus:ring-blue-500 focus:border-blue-500"/>

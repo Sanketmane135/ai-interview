@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth"; // your NextAuth config
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Dashboard from "@/components/dashboard";
 import { authOptions } from "@/app/lib/auth";

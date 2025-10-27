@@ -115,11 +115,11 @@ function Dashboard() {
         </div>
       )}
 
-      {/* 🪟 Modal Section */}
+      {/*Modal  */}
       {isModalOpen && selectedInterview && (
         <div className="  fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="bg-white max-h-[80vh] overflow-y-auto rounded-xl shadow-lg w-11/12 md:w-1/2 p-6 text-gray-800 relative">
-            {/* Close button */}
+            
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
@@ -152,19 +152,19 @@ function Dashboard() {
 
       
 
-              {/* skills */}
+             
               <div className="bg-white rounded-xl shadow-md p-6 mt-5">
-                {/* Main Grid */}
+              
                 <div className="grid  gap-6">
 
-                  {/* Left: Skills & Comments */}
+                 
                   <div className="md:col-span-2 space-y-6">
                     <div className="border border-gray-200 rounded-lg p-5">
                       <h2 className="text-lg font-semibold text-gray-800 mb-4">
                         Skills Assessment
                       </h2>
 
-                      {/* Adaptability */}
+                  
                       <div className="mb-3">
                         <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
                           <span>Adaptability</span>
@@ -178,7 +178,7 @@ function Dashboard() {
                         </div>
                       </div>
 
-                      {/* Communication */}
+                    
                       <div className="mb-3">
                         <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
                           <span>Communication</span>
@@ -192,7 +192,7 @@ function Dashboard() {
                         </div>
                       </div>
 
-                      {/* strategy */}
+                    
                       <div className="mb-3">
                         <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
                           <span>strategy</span>
@@ -206,7 +206,7 @@ function Dashboard() {
                         </div>
                       </div>
 
-                      {/* teamwork */}
+                    
                        <div className="mb-3">
                         <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
                           <span>teamwork</span>
@@ -223,9 +223,9 @@ function Dashboard() {
                     </div>
                   </div>
 
-                  {/* Right: Strengths & Growth */}
+                
                   <div className="space-y-6">
-                    {/* Strengths */}
+                 
                     <div className="border border-gray-200 rounded-lg p-5">
                       <h2 className="text-lg font-semibold text-gray-800 mb-3">
                         Strengths
@@ -244,7 +244,7 @@ function Dashboard() {
                       </ul>
                     </div>
 
-                    {/* Growth Opportunities */}
+                    
                     <div className="border border-gray-200 rounded-lg p-5">
                       <h2 className="text-lg font-semibold text-gray-800 mb-3">
                         Growth Opportunities
@@ -275,31 +275,31 @@ function Dashboard() {
               </div>
 
 
-              {/* questiosn and answers */}
+             
               <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-white shadow-xl rounded-lg border border-gray-100">
       
-                  {/* Title */}
+                 
                   <h1 className="text-2xl font-semibold mb-6 text-gray-800 border-b pb-2">
                     Interview Q&A
                   </h1>
 
-                  {/* Map through the QA data to render each section */}
+                  
                   {selectedInterview.answers_feedback.map((item, index) => (
                     <div key={index} className={`mb-8 `}>
                       
-                      {/* Question (Q:) */}
+                    
                       <p className="text-xl font-medium text-gray-900 mb-1">
                         <span className="font-bold text-lg mr-2 text-indigo-600">Q:</span> 
                         {item.question}
                       </p>
 
-                      {/* Answer (A:) */}
+                   
                       <p className="italic text-gray-600 ml-4 mb-4 text-sm">
                         <span className="font-semibold text-gray-500 mr-1">A:</span> 
                         {item.answer}
                       </p>
 
-                      {/* Feedback Box */}
+                    
                       <div className="bg-gray-50 p-3 rounded-md border border-gray-200 shadow-inner ml-4">
                         <p className="font-semibold text-sm text-gray-700 mb-1">Feedback:</p>
                         <p className="text-gray-600 text-sm">

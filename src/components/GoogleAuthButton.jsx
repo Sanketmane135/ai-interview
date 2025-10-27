@@ -12,23 +12,23 @@ export default function GoogleAuthButton() {
 if (status === "loading")
   return (
     <>
-      {/* Desktop Skeleton */}
+      
       <div className="hidden md:flex items-center rounded p-1 text-sm gap-3 animate-pulse">
         <div className="flex items-center border border-gray-600 rounded p-1 text-sm gap-3">
-          {/* Skeleton for user image */}
+          
           <div className="w-9 h-9 rounded-full bg-gray-700"></div>
 
-          {/* Skeleton for user name */}
+         
           <div className="h-4 w-24 bg-gray-700 rounded"></div>
         </div>
 
-        {/* Skeleton for sign out button */}
+        
         <div>
           <div className="h-7 w-16 bg-gray-700 rounded"></div>
         </div>
       </div>
 
-      {/* Mobile Skeleton */}
+    
       <div className="flex md:hidden items-center gap-2 animate-pulse">
         <div className="h-10 w-9 bg-gray-700 rounded"></div>
       </div>
@@ -39,7 +39,7 @@ if (status === "loading")
   if (session) {
     return (
       <div className="relative">
-        {/* Desktop View */}
+       
         <div className="hidden md:flex items-center rounded p-1 text-sm gap-3">
           <Link href="/dashboard" className="p-1 border-b rounded hover:text-blue-500">
             Dashboard
@@ -65,18 +65,18 @@ if (status === "loading")
           </button>
         </div>
 
-        {/* Mobile View */}
+       
         <div className="flex md:hidden items-center gap-2">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-2xl text-white border rounded p-1"
           >
-            {/* You can replace "=" with <Menu size={24}/> if using lucide-react */}
+            
             <MenuIcon/>
           </button>
         </div>
 
-        {/* Dropdown Menu for Mobile */}
+      
         {menuOpen && (
           <div className="absolute right-0 mt-2 w-50 bg-gray-900 border border-gray-700 rounded-lg shadow-lg flex flex-col gap-2 p-2 z-50">
             <Link
